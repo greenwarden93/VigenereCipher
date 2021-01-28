@@ -1,0 +1,52 @@
+#this code uses a Vigenere cipher to take a phrase and encrpyt it. It allows the user to input a key or choose a random key.
+
+#definitions
+
+phrase_input = input("What phrase do you want to encrypt? \n")
+phrase_input = phrase_input.lower()
+phrase = list(phrase_input)
+key_input = input("What key would you like to use? Please enter a word. \n")
+key_length = len(key_input) - 1
+new_result = []
+key = list(key_input)
+i = 0
+
+#checks to see if the phrases inputed are alphabetical
+
+def vigenere(phrase_input):
+    if all(x.isalpha() or x.isspace() for x in phrase_input) and all(x.isalpha() or x.isspace() for x in key_input):
+        pass
+    else:
+        print("Please try again!")
+        return
+
+#applies the cipher
+
+def cipher():
+    global new_result
+    for ch in phrase:
+        global i
+        if i == key_length + 1:
+            i = 0
+        result = ord(ch) + (ord(key[i]) - 96)
+        if result == (ord(" ") + (ord(key[i]) - 96)):
+            result = " "
+            new_result.append(result)
+        elif 96 < result < 123:
+            new_result.append(chr(result))
+        else:
+            result = result - 26
+            new_result.append(chr(result))
+        i += 1
+
+# runs it all and prints out the results
+
+def operative(new_result):
+    vigenere(phrase_input)
+    cipher()
+    new_result = "".join(new_result)
+    print("Your original phrase was " + phrase_input)
+    print("Your key is " + key_input)
+    print("Your encrypted phrase is " + str(new_result))
+
+operative(new_result)
